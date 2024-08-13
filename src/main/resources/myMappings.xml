@@ -1,0 +1,30 @@
+<!-- <entity-mappings xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+  http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+  version="2.1">
+
+  <entity class="src\main\java\com\example\rental\domain\Client.java">
+    <table name="client"/>
+
+    <attributes>
+      <basic name = "firstName">
+        <column name = "first_name" length = "63" nullable = false/>
+      </basic>
+      <basic name = "lastName">
+        <column name = "last_name" length = "63" nullable = false/>
+      </basic>
+      <basic name = "middleName">
+        <column name = "middle_name" length = "63" nullable = false/>
+      </basic>
+      <basic name = "gender">
+        <column name = "gender" length = "63" nullable = false/>
+      </basic>
+      <basic name = "phoneNumber">
+        <column name = "phone_number" length = "63" nullable = false/>
+      </basic>
+    </attributes>
+  </entity>
+
+</entity-mappings> -->
+
