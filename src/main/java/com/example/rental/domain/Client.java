@@ -11,16 +11,20 @@ public class Client extends BaseEntity {
   private String lastName;
   private String middleName;
   private String gender;
+  private int height;
+  private int weight;
   private String phoneNumber;
   private ProofOfIdentity proofOfIdentity;
   private List<Payment> payments;
   private List<LeaseAgreement> leaseAgreements;
 
-  public Client(String firstName, String lastName, String middleName, String gender, String phoneNumber, ProofOfIdentity proofOfIdentity) {
+  public Client(String firstName, String lastName, String middleName, String gender, int height, int weight, String phoneNumber, ProofOfIdentity proofOfIdentity) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.middleName = middleName;
     this.gender = gender;
+    this.height = height;
+    this.weight = weight;
     this.phoneNumber = phoneNumber;
     this.proofOfIdentity = proofOfIdentity;
   }
@@ -45,6 +49,16 @@ public class Client extends BaseEntity {
   @Column(name = "gender", length = 63, nullable = false)
   public String getGender() {
     return gender;
+  }
+
+  @Column(name = "height", nullable = false)
+  public int getHeight() {
+    return height;
+  }
+
+  @Column(name = "weight", nullable = false)
+  public int getWeight() {
+    return weight;
   }
 
   @Column(name = "phone_number", length = 63, nullable = false)
@@ -97,6 +111,22 @@ public class Client extends BaseEntity {
     }
 
     this.gender = gender;
+  }
+
+  public void setHeight(int height) {
+    if (height <= 0) {
+      return;
+    }
+
+    this.height = height;
+  }
+
+  public void setWeight(int weight) {
+    if (weight <= 0) {
+      return;
+    }
+
+    this.weight = weight;
   }
 
   public void setPhoneNumber(String phoneNumber) {
