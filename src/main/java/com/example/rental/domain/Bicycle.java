@@ -1,5 +1,6 @@
 package com.example.rental.domain;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -14,11 +15,11 @@ public class Bicycle extends BaseEntity {
   private int maxHeight;
   private int maxWeight;
   private String brakesType;
-  private int costPerDay;
+  private BigDecimal costPerDay;
   private boolean isAvailable;
   private List<LeaseAgreement> leaseAgreements;
 
-  public Bicycle(String manufacturer, String model, String type, int numberOfSpeeds, int maxHeight, int maxWeight, String brakesType, int costPerDay, boolean isAvailable, List<LeaseAgreement> leaseAgreements) {
+  public Bicycle(String manufacturer, String model, String type, int numberOfSpeeds, int maxHeight, int maxWeight, String brakesType, BigDecimal costPerDay, boolean isAvailable, List<LeaseAgreement> leaseAgreements) {
     this.manufacturer = manufacturer;
     this.model = model;
     this.type = type;
@@ -68,8 +69,8 @@ public class Bicycle extends BaseEntity {
     return brakesType;
   }
 
-  @Column(name = "cost_per_day", nullable = false)
-  public int getCostPerDay() {
+  @Column(name = "cost_per_day")
+  public BigDecimal getCostPerDay() {
     return costPerDay;
   }
 
@@ -139,11 +140,7 @@ public class Bicycle extends BaseEntity {
     this.brakesType = brakesType;
   }
 
-  public void setCostPerDay(int costPerDay) {
-    if (costPerDay <= 0) {
-      return;
-    }
-
+  public void setCostPerDay(BigDecimal costPerDay) {
     this.costPerDay = costPerDay;
   }
 
