@@ -1,5 +1,6 @@
 package com.example.rental.domain;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
 import com.example.rental.domain.enums.PaymentStatus;
@@ -9,13 +10,13 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "payments")
 public class Payment extends BaseEntity {
-  private int price;
+  private BigDecimal price;
   private OffsetDateTime dateTime;
   private PaymentStatus paymentStatus;
   private Client client;
   private LeaseAgreement leaseAgreement;
 
-  public Payment(int price, OffsetDateTime dateTime, PaymentStatus paymentStatus, Client client) {
+  public Payment(BigDecimal price, OffsetDateTime dateTime, PaymentStatus paymentStatus, Client client) {
     this.price = price;
     this.dateTime = OffsetDateTime.now();
     this.paymentStatus = PaymentStatus.WAITING;
@@ -25,7 +26,7 @@ public class Payment extends BaseEntity {
   protected Payment() {}
 
   @Column(name = "price", nullable = false)
-  public int getPrice() {
+  public BigDecimal getPrice() {
     return price;
   }
 
@@ -51,7 +52,7 @@ public class Payment extends BaseEntity {
     return leaseAgreement;
   }
 
-  public void setPrice(int price) {
+  public void setPrice(BigDecimal price) {
     this.price = price;
   }
 
