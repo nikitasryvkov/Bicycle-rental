@@ -1,4 +1,4 @@
-package com.example.rental.repositories;
+package com.example.rental.repositories.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

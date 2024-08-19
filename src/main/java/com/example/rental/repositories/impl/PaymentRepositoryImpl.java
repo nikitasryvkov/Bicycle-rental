@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.rental.domain.Payment;
 import com.example.rental.domain.enums.PaymentStatus;
-import com.example.rental.repositories.CRUDRepository;
 import com.example.rental.repositories.PaymentRepository;
 
 import jakarta.persistence.EntityManager;

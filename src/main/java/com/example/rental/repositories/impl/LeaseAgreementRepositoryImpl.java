@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.example.rental.domain.LeaseAgreement;
-import com.example.rental.repositories.CRUDRepository;
 import com.example.rental.repositories.LeaseAgreementRepository;
 
 import jakarta.persistence.EntityManager;

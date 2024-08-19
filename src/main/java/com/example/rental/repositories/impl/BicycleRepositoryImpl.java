@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.example.rental.domain.Bicycle;
 import com.example.rental.domain.enums.BicycleType;
-import com.example.rental.repositories.CRUDRepository;
 import com.example.rental.repositories.BicycleRepository;
 
 import jakarta.persistence.EntityManager;

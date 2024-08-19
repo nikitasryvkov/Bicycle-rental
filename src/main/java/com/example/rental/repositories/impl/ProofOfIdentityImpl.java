@@ -3,7 +3,6 @@ package com.example.rental.repositories.impl;
 import org.springframework.stereotype.Repository;
 
 import com.example.rental.domain.ProofOfIdentity;
-import com.example.rental.repositories.CRUDRepository;
 import com.example.rental.repositories.ProofOfIdentityRepository;
 
 import jakarta.persistence.EntityManager;
