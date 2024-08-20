@@ -16,15 +16,18 @@ import com.example.rental.domain.Bicycle;
 import com.example.rental.domain.Client;
 import com.example.rental.domain.LeaseAgreement;
 import com.example.rental.domain.Payment;
+import com.example.rental.domain.ProofOfIdentity;
 import com.example.rental.domain.enums.PaymentStatus;
 import com.example.rental.dtos.BicycleByRentalTimeDTO;
 import com.example.rental.dtos.LeaseAgreementDTO;
 import com.example.rental.exceptions.CustomPaymentException;
+import com.example.rental.exceptions.CustomProofOfIdentityException;
 import com.example.rental.exceptions.NoAvailableBicyclesException;
 import com.example.rental.repositories.impl.BicycleRepositoryImpl;
 import com.example.rental.repositories.impl.ClientRepositoryImpl;
 import com.example.rental.repositories.impl.LeaseAgreementRepositoryImpl;
 import com.example.rental.repositories.impl.PaymentRepositoryImpl;
+import com.example.rental.repositories.impl.ProofOfIdentityImpl;
 import com.example.rental.services.LeaseAgreementService;
 
 @Service
@@ -37,6 +40,8 @@ public class DomainLeaseAgreementServiceImpl implements LeaseAgreementService {
   private ClientRepositoryImpl clientRepositoryImpl;
   @Autowired
   private PaymentRepositoryImpl paymentRepositoryImpl;
+  @Autowired
+  private ProofOfIdentityImpl proofOfIdentityImpl;
   @Autowired
   private ModelMapper modelMapper;
 
@@ -68,10 +73,17 @@ public class DomainLeaseAgreementServiceImpl implements LeaseAgreementService {
 
     Client client = clientRepositoryImpl.findById(Client.class, clientId);
     Bicycle bicycle = bicycleRepositoryImpl.findById(Bicycle.class, bicycleId);
+    ProofOfIdentity proofOfIdentity = client.getProofOfIdentity();
 
     List<Payment> sortPayment = paymentRepositoryImpl.getAllPayments().stream()
       .filter(s -> s.getPaymentStatus() == PaymentStatus.WAITING)
       .collect(Collectors.toList());
+
+    if (proofOfIdentity.getProofOfIdentityStatus().toString() == "CONFIRMATION") {
+      throw new CustomProofOfIdentityException("Необходимо подтвердить документ");
+    } else if (proofOfIdentity.getProofOfIdentityStatus().toString() == "REJECTED") {
+      throw new CustomProofOfIdentityException("Необходимо повторно подтвердить документ");
+    }
 
     if (!sortPayment.isEmpty()) {
       throw new CustomPaymentException("У данного клиента есть не оплаченный платеж");
