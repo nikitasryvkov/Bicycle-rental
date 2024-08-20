@@ -66,7 +66,8 @@ public class Client extends BaseEntity {
     return phoneNumber;
   }
 
-  @OneToOne(mappedBy = "client", targetEntity = ProofOfIdentity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToOne(optional = false)
+  @JoinColumn(name = "proof_of_identity_id", nullable = false)
   public ProofOfIdentity getProofOfIdentity() {
     return proofOfIdentity;
   }

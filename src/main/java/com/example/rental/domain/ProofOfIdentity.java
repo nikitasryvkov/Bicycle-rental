@@ -1,5 +1,7 @@
 package com.example.rental.domain;
 
+import com.example.rental.domain.enums.ProofOfIdentityStatus;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -8,11 +10,13 @@ public class ProofOfIdentity extends BaseEntity {
   private String documentType;
   private String numberAndSeries;
   private Client client;
+  private ProofOfIdentityStatus proofOfIdentityStatus;
 
-  public ProofOfIdentity(String documentType, String numberAndSeries, Client client) {
+  public ProofOfIdentity(String documentType, String numberAndSeries, Client client, ProofOfIdentityStatus proofOfIdentityStatus) {
     this.documentType = documentType;
     this.numberAndSeries = numberAndSeries;
     this.client = client;
+    this.proofOfIdentityStatus =proofOfIdentityStatus;
   }
 
   protected ProofOfIdentity() {}
@@ -27,10 +31,15 @@ public class ProofOfIdentity extends BaseEntity {
     return numberAndSeries;
   }
 
-  @OneToOne(optional = false)
-  @JoinColumn(name = "client_id", nullable = false)
+  @OneToOne(mappedBy = "proofOfIdentity", targetEntity = Client.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   public Client getClient() {
     return client;
+  }
+
+  @Column(name = "proof_of_identity_status", nullable = false)
+  @Enumerated(EnumType.STRING)
+  public ProofOfIdentityStatus getProofOfIdentityStatus() {
+    return proofOfIdentityStatus;
   }
 
   public void setDocumentType(String documentType) {
@@ -43,5 +52,9 @@ public class ProofOfIdentity extends BaseEntity {
 
   public void setClient(Client client) {
     this.client = client;
+  }
+
+  public void setProofOfIdentityStatus(ProofOfIdentityStatus proofOfIdentityStatus) {
+    this.proofOfIdentityStatus = proofOfIdentityStatus;
   }
 }
