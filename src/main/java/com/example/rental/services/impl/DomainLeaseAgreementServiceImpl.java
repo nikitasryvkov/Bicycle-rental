@@ -27,7 +27,7 @@ import com.example.rental.repositories.impl.BicycleRepositoryImpl;
 import com.example.rental.repositories.impl.ClientRepositoryImpl;
 import com.example.rental.repositories.impl.LeaseAgreementRepositoryImpl;
 import com.example.rental.repositories.impl.PaymentRepositoryImpl;
-import com.example.rental.repositories.impl.ProofOfIdentityImpl;
+import com.example.rental.repositories.impl.ProofOfIdentityRepositotyImpl;
 import com.example.rental.services.LeaseAgreementService;
 
 @Service
@@ -41,7 +41,7 @@ public class DomainLeaseAgreementServiceImpl implements LeaseAgreementService {
   @Autowired
   private PaymentRepositoryImpl paymentRepositoryImpl;
   @Autowired
-  private ProofOfIdentityImpl proofOfIdentityImpl;
+  private ProofOfIdentityRepositotyImpl proofOfIdentityImpl;
   @Autowired
   private ModelMapper modelMapper;
 
