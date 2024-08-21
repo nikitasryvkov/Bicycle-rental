@@ -18,7 +18,7 @@ import com.example.rental.services.impl.BicycleServiceImpl;
 public class BicycleController {
 
   @Autowired
-  BicycleServiceImpl bicycleServiceImpl;
+  public BicycleServiceImpl bicycleServiceImpl;
 
   @GetMapping("/bicycleByAnth")
   public List<BicycleByAnthropometricDTO> getBicycleByAnthropometric(@RequestParam(name = "id") int id) {
