@@ -27,7 +27,6 @@ public class DomainClientServiceImpl implements ClientService {
     ProofOfIdentity proofOfIdentity = new ProofOfIdentity(
       proofOfIdentityDTO.getDocumentType(),
       proofOfIdentityDTO.getNumberAndSeries(),
-      null,
       ProofOfIdentityStatus.CONFIRMATION);
 
     proofOfIdentityRepositotyImpl.save(proofOfIdentity);
@@ -36,7 +35,7 @@ public class DomainClientServiceImpl implements ClientService {
       clientDTO.getFirstName(),
       clientDTO.getLastName(),
       clientDTO.getMiddleName(),
-      clientDTO.getGender(),
+      clientDTO.getGenderType(),
       clientDTO.getHeight(),
       clientDTO.getWeight(),
       clientDTO.getPhoneNumber(),

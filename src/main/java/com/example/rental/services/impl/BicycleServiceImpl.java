@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.rental.domain.Bicycle;
 import com.example.rental.domain.Client;
-import com.example.rental.dtos.BicycleByAnthropometricDTO;
+import com.example.rental.domain.enums.BicycleStatus;
+import com.example.rental.dtos.BicycleDTO;
 import com.example.rental.dtos.BicycleByFilterDTO;
 import com.example.rental.dtos.ClientAnthropometricDTO;
 import com.example.rental.repositories.impl.BicycleRepositoryImpl;
@@ -26,15 +27,33 @@ public class BicycleServiceImpl implements BicycleService {
   private ModelMapper modelMapper;
 
   @Override
-  public List<BicycleByAnthropometricDTO> getBicycleByAnthropometricByClient(int id) {
+  public BicycleDTO addBicycle(BicycleDTO bicycleDTO) {
+    Bicycle bicycle = new Bicycle(
+      bicycleDTO.getManufacturer(),
+      bicycleDTO.getModel(),
+      bicycleDTO.getBicycleType(),
+      bicycleDTO.getNumberOfSpeeds(),
+      bicycleDTO.getMaxHeight(),
+      bicycleDTO.getMaxWeight(),
+      bicycleDTO.getBrakesType(),
+      bicycleDTO.getCostPerDay(),
+      bicycleDTO.getBicycleStatus());
+
+    bicycleRepositoryImpl.save(bicycle);
+
+    return modelMapper.map(bicycle, BicycleDTO.class);
+  }
+
+  @Override
+  public List<BicycleDTO> getBicycleByAnthropometricByClient(int id) {
     Client client = clientRepositoryImpl.findById(Client.class, id);
     ClientAnthropometricDTO clientAnthropometricDTO = modelMapper.map(client, ClientAnthropometricDTO.class);
 
-    List<Bicycle> listBicycle = bicycleRepositoryImpl.getAvailableBicycleByStatus(true);
-    List<BicycleByAnthropometricDTO> sortBicycle = listBicycle.stream()
+    List<Bicycle> listBicycle = bicycleRepositoryImpl.getAvailableBicycleByStatus(BicycleStatus.AVAILABLE);
+    List<BicycleDTO> sortBicycle = listBicycle.stream()
       .filter(b -> b.getMaxHeight() >= clientAnthropometricDTO.getHeight())
       .filter(b -> b.getMaxWeight() >= clientAnthropometricDTO.getWeight())
-      .map(b -> modelMapper.map(b, BicycleByAnthropometricDTO.class))
+      .map(b -> modelMapper.map(b, BicycleDTO.class))
       .collect(Collectors.toList());
 
     return sortBicycle;
@@ -45,7 +64,7 @@ public class BicycleServiceImpl implements BicycleService {
     List<Bicycle> bicycles = bicycleRepositoryImpl.getBicycleByFilter(
         bicycleByFilterDTO.getManufacturer(),
         bicycleByFilterDTO.getModel(),
-        bicycleByFilterDTO.getType(),
+        bicycleByFilterDTO.getBicycleType(),
         bicycleByFilterDTO.getBrakesType(),
         bicycleByFilterDTO.getCostPerDay()
       );

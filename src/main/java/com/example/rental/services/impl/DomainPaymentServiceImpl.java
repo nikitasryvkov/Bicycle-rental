@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.rental.domain.Bicycle;
 import com.example.rental.domain.Payment;
+import com.example.rental.domain.enums.BicycleStatus;
 import com.example.rental.domain.enums.PaymentStatus;
 import com.example.rental.exceptions.CustomPaymentException;
 import com.example.rental.repositories.impl.BicycleRepositoryImpl;
@@ -33,7 +34,7 @@ public class DomainPaymentServiceImpl implements PaymentService {
     if (!(sortPayment.get(0).getPrice().compareTo(money) == 0)) {
       int paymentId = sortPayment.get(0).getLeaseAgreement().getBicycle().getId();
       Bicycle bicycle = bicycleRepositoryImpl.findById(Bicycle.class, paymentId);
-      bicycle.setAvailable(true);
+      bicycle.setBicycleStatus(BicycleStatus.AVAILABLE);
       paymentRepositoryImpl.updateStatus(sortPayment.get(0).getId(), PaymentStatus.CANCELLED);
 
       throw new CustomPaymentException("Сумма платежа не соответствует прописанной в договоре, повторите алгоритм аренды велосипеда заново");

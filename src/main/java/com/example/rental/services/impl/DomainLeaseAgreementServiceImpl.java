@@ -17,6 +17,7 @@ import com.example.rental.domain.Client;
 import com.example.rental.domain.LeaseAgreement;
 import com.example.rental.domain.Payment;
 import com.example.rental.domain.ProofOfIdentity;
+import com.example.rental.domain.enums.BicycleStatus;
 import com.example.rental.domain.enums.PaymentStatus;
 import com.example.rental.dtos.BicycleByRentalTimeDTO;
 import com.example.rental.dtos.LeaseAgreementDTO;
@@ -27,7 +28,7 @@ import com.example.rental.repositories.impl.BicycleRepositoryImpl;
 import com.example.rental.repositories.impl.ClientRepositoryImpl;
 import com.example.rental.repositories.impl.LeaseAgreementRepositoryImpl;
 import com.example.rental.repositories.impl.PaymentRepositoryImpl;
-import com.example.rental.repositories.impl.ProofOfIdentityRepositotyImpl;
+import com.example.rental.repositories.impl.ProofOfIdentityRepositoryImpl;
 import com.example.rental.services.LeaseAgreementService;
 
 @Service
@@ -41,7 +42,7 @@ public class DomainLeaseAgreementServiceImpl implements LeaseAgreementService {
   @Autowired
   private PaymentRepositoryImpl paymentRepositoryImpl;
   @Autowired
-  private ProofOfIdentityRepositotyImpl proofOfIdentityImpl;
+  private ProofOfIdentityRepositoryImpl proofOfIdentityImpl;
   @Autowired
   private ModelMapper modelMapper;
 
@@ -81,18 +82,16 @@ public class DomainLeaseAgreementServiceImpl implements LeaseAgreementService {
 
     if (proofOfIdentity.getProofOfIdentityStatus().toString() == "CONFIRMATION") {
       throw new CustomProofOfIdentityException("Необходимо подтвердить документ");
-    } else if (proofOfIdentity.getProofOfIdentityStatus().toString() == "REJECTED") {
-      throw new CustomProofOfIdentityException("Необходимо повторно подтвердить документ");
     }
 
     if (!sortPayment.isEmpty()) {
       throw new CustomPaymentException("У данного клиента есть не оплаченный платеж");
     }
 
-    if (!bicycle.isAvailable()) {
-      throw new NoAvailableBicyclesException("Нет доступных велосипедов для аренды");
+    if (bicycle.getBicycleStatus().toString() == "RESERVED") {
+      throw new NoAvailableBicyclesException("Выбранный велосипед уже арендован");
     } else {
-      bicycle.setAvailable(false);
+      bicycleRepositoryImpl.updateStatus(bicycleId, BicycleStatus.RESERVED);
     }
 
     Payment payment = new Payment(calculateTotalCost(bicycle, startDate, finishDate), OffsetDateTime.now(), PaymentStatus.WAITING, client);
