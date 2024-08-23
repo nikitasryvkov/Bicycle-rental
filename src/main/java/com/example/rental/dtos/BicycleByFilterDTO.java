@@ -2,17 +2,19 @@ package com.example.rental.dtos;
 
 import java.math.BigDecimal;
 
+import com.example.rental.domain.enums.BicycleType;
+
 public class BicycleByFilterDTO extends IdDTO {
   private String manufacturer;
   private String model;
-  private String type;
+  private BicycleType bicycleType;
   private String brakesType;
   private BigDecimal costPerDay;
 
-  public BicycleByFilterDTO(String manufacturer, String model, String type, String brakesType, BigDecimal costPerDay) {
+  public BicycleByFilterDTO(String manufacturer, String model, BicycleType bicycleType, String brakesType, BigDecimal costPerDay) {
     this.manufacturer = manufacturer;
     this.model = model;
-    this.type = type;
+    this.bicycleType = bicycleType;
     this.brakesType = brakesType;
     this.costPerDay = costPerDay;
   }
@@ -27,8 +29,8 @@ public class BicycleByFilterDTO extends IdDTO {
     return model;
   }
 
-  public String getType() {
-    return type;
+  public BicycleType getBicycleType() {
+    return bicycleType;
   }
 
   public String getBrakesType() {
@@ -47,8 +49,8 @@ public class BicycleByFilterDTO extends IdDTO {
     this.model = model;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setBicycleType(BicycleType bicycleType) {
+    this.bicycleType = bicycleType;
   }
 
   public void setBrakesType(String brakesType) {

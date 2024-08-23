@@ -1,19 +1,21 @@
 package com.example.rental.dtos;
 
+import com.example.rental.domain.enums.GenderType;
+
 public class ClientDTO extends IdDTO {
   private String firstName;
   private String lastName;
   private String middleName;
-  private String gender;
+  private GenderType genderType;
   private int height;
   private int weight;
   private String phoneNumber;
 
-  public ClientDTO(String firstName, String lastName, String middleName, String gender, int height, int weight, String phoneNumber) {
+  public ClientDTO(String firstName, String lastName, String middleName, GenderType genderType, int height, int weight, String phoneNumber) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.middleName = middleName;
-    this.gender = gender;
+    this.genderType = genderType;
     this.height = height;
     this.weight = weight;
     this.phoneNumber = phoneNumber;
@@ -33,8 +35,8 @@ public class ClientDTO extends IdDTO {
     return middleName;
   }
 
-  public String getGender() {
-    return gender;
+  public GenderType getGenderType() {
+    return genderType;
   }
 
   public int getHeight() {
@@ -61,8 +63,8 @@ public class ClientDTO extends IdDTO {
     this.middleName = middleName;
   }
 
-  public void setGender(String gender) {
-    this.gender = gender;
+  public void setGenderType(GenderType genderType) {
+    this.genderType = genderType;
   }
 
   public void setHeight(int height) {
