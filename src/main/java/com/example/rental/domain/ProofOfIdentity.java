@@ -12,10 +12,9 @@ public class ProofOfIdentity extends BaseEntity {
   private Client client;
   private ProofOfIdentityStatus proofOfIdentityStatus;
 
-  public ProofOfIdentity(String documentType, String numberAndSeries, Client client, ProofOfIdentityStatus proofOfIdentityStatus) {
+  public ProofOfIdentity(String documentType, String numberAndSeries, ProofOfIdentityStatus proofOfIdentityStatus) {
     this.documentType = documentType;
     this.numberAndSeries = numberAndSeries;
-    this.client = client;
     this.proofOfIdentityStatus =proofOfIdentityStatus;
   }
 

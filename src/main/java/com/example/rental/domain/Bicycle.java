@@ -3,6 +3,9 @@ package com.example.rental.domain;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.example.rental.domain.enums.BicycleStatus;
+import com.example.rental.domain.enums.BicycleType;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,26 +13,25 @@ import jakarta.persistence.*;
 public class Bicycle extends BaseEntity {
   private String manufacturer;
   private String model;
-  private String type;
+  private BicycleType bicycleType;
   private int numberOfSpeeds;
   private int maxHeight;
   private int maxWeight;
   private String brakesType;
   private BigDecimal costPerDay;
-  private boolean isAvailable;
+  private BicycleStatus bicycleStatus;
   private List<LeaseAgreement> leaseAgreements;
 
-  public Bicycle(String manufacturer, String model, String type, int numberOfSpeeds, int maxHeight, int maxWeight, String brakesType, BigDecimal costPerDay, boolean isAvailable, List<LeaseAgreement> leaseAgreements) {
+  public Bicycle(String manufacturer, String model, BicycleType bicycleType, int numberOfSpeeds, int maxHeight, int maxWeight, String brakesType, BigDecimal costPerDay, BicycleStatus bicycleStatus) {
     this.manufacturer = manufacturer;
     this.model = model;
-    this.type = type;
+    this.bicycleType = bicycleType;
     this.numberOfSpeeds = numberOfSpeeds;
     this.maxHeight = maxHeight;
     this.maxWeight = maxWeight;
     this.brakesType = brakesType;
     this.costPerDay = costPerDay;
-    this.isAvailable = true;
-    this.leaseAgreements = leaseAgreements;
+    this.bicycleStatus = bicycleStatus;
   }
 
   protected Bicycle() {}
@@ -45,8 +47,9 @@ public class Bicycle extends BaseEntity {
   }
 
   @Column(name = "type", length = 63, nullable = false)
-  public String getType() {
-    return type;
+  @Enumerated(EnumType.STRING)
+  public BicycleType getBicycleType() {
+    return bicycleType;
   }
 
   @Column(name = "number_of_speeds", nullable = false)
@@ -64,7 +67,7 @@ public class Bicycle extends BaseEntity {
     return maxWeight;
   }
 
-  @Column(name = "brakes_type", length = 63, nullable = false)
+  @Column(name = "brakes_type", length = 63)
   public String getBrakesType() {
     return brakesType;
   }
@@ -74,9 +77,10 @@ public class Bicycle extends BaseEntity {
     return costPerDay;
   }
 
-  @Column(name = "isAvailable")
-  public boolean isAvailable() {
-    return isAvailable;
+  @Column(name = "bicycle_status")
+  @Enumerated(EnumType.STRING)
+  public BicycleStatus getBicycleStatus() {
+    return bicycleStatus;
   }
 
   @OneToMany(mappedBy = "bicycle", targetEntity = LeaseAgreement.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -100,12 +104,8 @@ public class Bicycle extends BaseEntity {
     this.model = model;
   }
 
-  public void setType(String type) {
-    if (type == null) {
-      return;
-    }
-
-    this.type = type;
+  public void setBicycleType(BicycleType bicycleType) {
+    this.bicycleType = bicycleType;
   }
 
   public void setNumberOfSpeeds(int numberOfSpeeds) {
@@ -144,8 +144,8 @@ public class Bicycle extends BaseEntity {
     this.costPerDay = costPerDay;
   }
 
-  public void setAvailable(boolean isAvailable) {
-    this.isAvailable = isAvailable;
+  public void setBicycleStatus(BicycleStatus bicycleStatus) {
+    this.bicycleStatus = bicycleStatus;
   }
 
   public void setLeaseAgreements(List<LeaseAgreement> leaseAgreements) {

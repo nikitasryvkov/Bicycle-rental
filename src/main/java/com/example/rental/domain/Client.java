@@ -2,6 +2,8 @@ package com.example.rental.domain;
 
 import java.util.List;
 
+import com.example.rental.domain.enums.GenderType;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,7 +12,7 @@ public class Client extends BaseEntity {
   private String firstName;
   private String lastName;
   private String middleName;
-  private String gender;
+  private GenderType genderType;
   private int height;
   private int weight;
   private String phoneNumber;
@@ -18,11 +20,11 @@ public class Client extends BaseEntity {
   private List<Payment> payments;
   private List<LeaseAgreement> leaseAgreements;
 
-  public Client(String firstName, String lastName, String middleName, String gender, int height, int weight, String phoneNumber, ProofOfIdentity proofOfIdentity) {
+  public Client(String firstName, String lastName, String middleName, GenderType genderType, int height, int weight, String phoneNumber, ProofOfIdentity proofOfIdentity) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.middleName = middleName;
-    this.gender = gender;
+    this.genderType = genderType;
     this.height = height;
     this.weight = weight;
     this.phoneNumber = phoneNumber;
@@ -47,8 +49,8 @@ public class Client extends BaseEntity {
   }
 
   @Column(name = "gender", length = 63, nullable = false)
-  public String getGender() {
-    return gender;
+  public GenderType getGenderType() {
+    return genderType;
   }
 
   @Column(name = "height", nullable = false)
@@ -106,12 +108,8 @@ public class Client extends BaseEntity {
     this.middleName = middleName;
   }
 
-  public void setGender(String gender) {
-    if (gender == null) {
-      return;
-    }
-
-    this.gender = gender;
+  public void setGenderType(GenderType genderType) {
+    this.genderType = genderType;
   }
 
   public void setHeight(int height) {
