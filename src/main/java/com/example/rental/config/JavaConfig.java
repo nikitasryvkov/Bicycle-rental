@@ -9,14 +9,14 @@ import com.example.rental.domain.Client;
 import com.example.rental.domain.LeaseAgreement;
 import com.example.rental.domain.Payment;
 import com.example.rental.domain.ProofOfIdentity;
-import com.example.rental.dtos.BicycleByAnthropometricDTO;
+import com.example.rental.dtos.BicycleDTO;
 
 @Configuration
 public class JavaConfig {
   @Bean
   public ModelMapper modelMapper() {
     ModelMapper modelMapper = new ModelMapper();
-    modelMapper.createTypeMap(Bicycle.class, BicycleByAnthropometricDTO.class);
+    modelMapper.createTypeMap(Bicycle.class, BicycleDTO.class);
     return modelMapper;
   }
 
