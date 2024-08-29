@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.rental.domain.enums.GenderType;
 import com.example.rental.dtos.ClientDTO;
 import com.example.rental.dtos.ProofOfIdentityDTO;
-import com.example.rental.services.impl.DomainClientServiceImpl;
+import com.example.rental.services.ClientService;
 
 @RestController
 @RequestMapping("/api/clients")
 public class ClientController {
 
   @Autowired
-  public DomainClientServiceImpl domainClientServiceImpl;
+  public ClientService clientService;
 
   @PostMapping()
   public ClientDTO create(
@@ -32,6 +32,6 @@ public class ClientController {
 
     ClientDTO clientDTO = new ClientDTO(firstName, lastName, middleName, genderType, height, weight, phoneNumber);
     ProofOfIdentityDTO proofOfIdentityDTO = new ProofOfIdentityDTO(documentType, numberAndSeries);
-    return domainClientServiceImpl.addClient(clientDTO, proofOfIdentityDTO);
+    return clientService.addClient(clientDTO, proofOfIdentityDTO);
   }
 }

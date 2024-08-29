@@ -14,19 +14,18 @@ import com.example.rental.dtos.BicycleDTO;
 import com.example.rental.domain.enums.BicycleStatus;
 import com.example.rental.domain.enums.BicycleType;
 import com.example.rental.dtos.BicycleByFilterDTO;
-import com.example.rental.dtos.BicycleDTO;
-import com.example.rental.services.impl.BicycleServiceImpl;
+import com.example.rental.services.BicycleService;
 
 @RestController
 @RequestMapping("/api/bicycles")
 public class BicycleController {
 
   @Autowired
-  public BicycleServiceImpl bicycleServiceImpl;
+  public BicycleService bicycleService;
 
   @GetMapping("/bicycleByAnth")
   public List<BicycleDTO> getBicycleByAnthropometric(@RequestParam(name = "id") int id) {
-    return bicycleServiceImpl.getBicycleByAnthropometricByClient(id);
+    return bicycleService.getBicycleByAnthropometricByClient(id);
   }
 
   @GetMapping("/bicycleByFilter")
@@ -38,7 +37,7 @@ public class BicycleController {
       @RequestParam(name = "costPerDay", required = false) BigDecimal costPerDay) {
 
     BicycleByFilterDTO bicycleByFilterDTO = new BicycleByFilterDTO(manufacturer, model, bicycleType, brakesType, costPerDay);
-    return bicycleServiceImpl.getBicycleByFilter(bicycleByFilterDTO);
+    return bicycleService.getBicycleByFilter(bicycleByFilterDTO);
   }
 
   @PostMapping("/add")
@@ -54,6 +53,6 @@ public class BicycleController {
     @RequestParam(name = "bicycleStatus") BicycleStatus bicycleStatus) {
 
     BicycleDTO bicycleDTO = new BicycleDTO(manufacturer, model, bicycleType, numberOfSpeeds, maxHeight, maxWeight, brakesType, costPerDay, bicycleStatus);
-    return bicycleServiceImpl.addBicycle(bicycleDTO);
+    return bicycleService.addBicycle(bicycleDTO);
   }
 }

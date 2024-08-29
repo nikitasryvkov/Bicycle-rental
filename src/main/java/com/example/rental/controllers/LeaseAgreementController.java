@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.rental.dtos.LeaseAgreementDTO;
-import com.example.rental.services.impl.DomainLeaseAgreementServiceImpl;
+import com.example.rental.services.LeaseAgreementService;
 
 @RestController
 @RequestMapping("/api/leaseAgreements")
 public class LeaseAgreementController {
 
   @Autowired
-  private DomainLeaseAgreementServiceImpl domainLeaseAgreementServiceImpl;
+  private LeaseAgreementService leaseAgreementService;
 
   @GetMapping("/bicycleRentalTime")
   public int getFinalRentalTime(@RequestParam(name = "bicycle") int id, @RequestParam(name = "money") BigDecimal money) {
-    return domainLeaseAgreementServiceImpl.getRentalTime(id, money);
+    return leaseAgreementService.getRentalTime(id, money);
   }
 
   @PostMapping("/rent")
   public LeaseAgreementDTO rentBicycle(@RequestBody LeaseAgreementDTO leaseAgreementDTO) {
-    return domainLeaseAgreementServiceImpl.rentBicycle(leaseAgreementDTO);
+    return leaseAgreementService.rentBicycle(leaseAgreementDTO);
   }
 }
