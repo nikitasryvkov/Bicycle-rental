@@ -15,14 +15,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @Repository
-public class BicycleRepositoryImpl extends CRUDRepository<Bicycle, Integer> implements BicycleRepository  {
+public class BicycleRepositoryImpl extends CRUDRepository<Bicycle> implements BicycleRepository  {
 
   @PersistenceContext
   private EntityManager entityManager;
-
-  public BicycleRepositoryImpl(Class<Bicycle> entityClass) {
-    super(entityClass);
-}
 
   @Override
   public List<Bicycle> getAvailableBicycleByStatus(BicycleStatus bicycleStatus) {

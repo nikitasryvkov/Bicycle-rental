@@ -13,14 +13,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @Repository
-public class PaymentRepositoryImpl extends CRUDRepository<Payment, Integer> implements PaymentRepository {
+public class PaymentRepositoryImpl extends CRUDRepository<Payment> implements PaymentRepository {
 
   @PersistenceContext
   private EntityManager entityManager;
-
-  public PaymentRepositoryImpl(Class<Payment> entityClass) {
-    super(entityClass);
-  }
 
   @Override
   public List<Payment> getAllPayments() {

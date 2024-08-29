@@ -1,31 +1,28 @@
 package com.example.rental.repositories.impl;
 
+import java.util.Optional;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
-public abstract class CRUDRepository<DomainEntity, T> {
-  private final Class<DomainEntity> entityClass;
+public abstract class CRUDRepository<T> {
   @PersistenceContext
   private EntityManager entityManager;
 
-  public CRUDRepository(Class<DomainEntity> entityClass) {
-    this.entityClass = entityClass;
+  @Transactional
+  public T save(T entity) {
+    entityManager.persist(entity);
+    return entity;
+  }
+
+  public Optional<T> findById(Class<T> entityClass, int id) {
+    return Optional.ofNullable(entityManager.find(entityClass, id));
   }
 
   @Transactional
-  public DomainEntity save(DomainEntity domainEntity) {
-    entityManager.persist(domainEntity);
-    return domainEntity;
-  }
-
-  public DomainEntity findById(Class<DomainEntity> entityClass, int id) {
-    return entityManager.find(entityClass, id);
-  }
-
-  @Transactional
-  public DomainEntity update(DomainEntity domainEntity) {
-    entityManager.merge(domainEntity);
-    return domainEntity;
+  public T update(T entity) {
+    entityManager.merge(entity);
+    return entity;
   }
 }

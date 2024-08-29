@@ -9,12 +9,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @Repository
-public class ClientRepositoryImpl extends CRUDRepository<Client, Integer> implements ClientRepository {
+public class ClientRepositoryImpl extends CRUDRepository<Client> implements ClientRepository {
 
   @PersistenceContext
   private EntityManager entityManager;
 
-  public ClientRepositoryImpl(Class<Client> entityClass) {
-    super(entityClass);
-  }
 }
