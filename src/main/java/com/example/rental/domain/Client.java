@@ -85,26 +85,14 @@ public class Client extends BaseEntity {
   }
 
   public void setFirstName(String firstName) {
-    if (firstName == null) {
-      return;
-    }
-
     this.firstName = firstName;
   }
 
   public void setLastName(String lastName) {
-    if (lastName == null) {
-      return;
-    }
-
     this.lastName = lastName;
   }
 
   public void setMiddleName(String middleName) {
-    if (middleName == null) {
-      return;
-    }
-
     this.middleName = middleName;
   }
 
@@ -113,34 +101,18 @@ public class Client extends BaseEntity {
   }
 
   public void setHeight(int height) {
-    if (height <= 0) {
-      return;
-    }
-
     this.height = height;
   }
 
   public void setWeight(int weight) {
-    if (weight <= 0) {
-      return;
-    }
-
     this.weight = weight;
   }
 
   public void setPhoneNumber(String phoneNumber) {
-    if (phoneNumber == null || !phoneNumber.matches("\\d{10}")) {
-      return;
-    }
-
     this.phoneNumber = phoneNumber;
   }
 
   public void setProofOfIdentity(ProofOfIdentity proofOfIdentity) {
-    if (proofOfIdentity == null) {
-      return;
-    }
-
     this.proofOfIdentity = proofOfIdentity;
   }
 

@@ -89,18 +89,10 @@ public class Bicycle extends BaseEntity {
   }
 
   public void setManufacturer(String manufacturer) {
-    if (manufacturer == null) {
-      return;
-    }
-
     this.manufacturer = manufacturer;
   }
 
   public void setModel(String model) {
-    if (model == null) {
-      return;
-    }
-
     this.model = model;
   }
 
@@ -109,34 +101,18 @@ public class Bicycle extends BaseEntity {
   }
 
   public void setNumberOfSpeeds(int numberOfSpeeds) {
-    if (numberOfSpeeds <= 0) {
-      return;
-    }
-
     this.numberOfSpeeds = numberOfSpeeds;
   }
 
   public void setMaxHeight(int maxHeight) {
-    if (maxHeight <= 0) {
-      return;
-    }
-
     this.maxHeight = maxHeight;
   }
 
   public void setMaxWeight(int maxWeight) {
-    if (maxWeight <= 0) {
-      return;
-    }
-
     this.maxWeight = maxWeight;
   }
 
   public void setBrakesType(String brakesType) {
-    if (brakesType == null) {
-      return;
-    }
-
     this.brakesType = brakesType;
   }
 

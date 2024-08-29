@@ -52,42 +52,22 @@ public class LeaseAgreement extends BaseEntity {
   }
 
   public void setStartDate(LocalDate startDate) {
-    if(startDate == null) {
-      return;
-    }
-
     this.startDate = startDate;
   }
 
   public void setFinishDate(LocalDate finishDate) {
-    if (finishDate == null) {
-      return;
-    }
-
     this.finishDate = finishDate;
   }
 
   public void setClient(Client client) {
-    if (client == null) {
-      return;
-    }
-
     this.client = client;
   }
 
   public void setBicycle(Bicycle bicycle) {
-    if (bicycle == null) {
-      return;
-    }
-
     this.bicycle = bicycle;
   }
 
   public void setPayment(Payment payment) {
-    if (payment == null) {
-      return;
-    }
-
     this.payment = payment;
   }
 }
