@@ -9,16 +9,16 @@ import com.example.rental.domain.ProofOfIdentity;
 import com.example.rental.domain.enums.ProofOfIdentityStatus;
 import com.example.rental.dtos.ClientDTO;
 import com.example.rental.dtos.ProofOfIdentityDTO;
-import com.example.rental.repositories.impl.ClientRepositoryImpl;
-import com.example.rental.repositories.impl.ProofOfIdentityRepositoryImpl;
+import com.example.rental.repositories.ClientRepository;
+import com.example.rental.repositories.ProofOfIdentityRepository;
 import com.example.rental.services.ClientService;
 
 @Service
 public class DomainClientServiceImpl implements ClientService {
   @Autowired
-  private ClientRepositoryImpl clientRepositoryImpl;
+  private ClientRepository clientRepository;
   @Autowired
-  private ProofOfIdentityRepositoryImpl proofOfIdentityRepositotyImpl;
+  private ProofOfIdentityRepository proofOfIdentityRepository;
   @Autowired
   private ModelMapper modelMapper;
 
@@ -29,7 +29,7 @@ public class DomainClientServiceImpl implements ClientService {
       proofOfIdentityDTO.getNumberAndSeries(),
       ProofOfIdentityStatus.CONFIRMATION);
 
-    proofOfIdentityRepositotyImpl.save(proofOfIdentity);
+    proofOfIdentityRepository.save(proofOfIdentity);
 
     Client client = new Client(
       clientDTO.getFirstName(),
@@ -42,10 +42,10 @@ public class DomainClientServiceImpl implements ClientService {
       proofOfIdentity);
 
 
-    clientRepositoryImpl.save(client);
+    clientRepository.save(client);
 
-    ClientDTO clientDTO2 = modelMapper.map(client, ClientDTO.class);
+    ClientDTO clientAdd = modelMapper.map(client, ClientDTO.class);
 
-    return clientDTO2;
+    return clientAdd;
   }
 }

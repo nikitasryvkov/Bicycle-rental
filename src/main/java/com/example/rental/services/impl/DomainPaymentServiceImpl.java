@@ -12,35 +12,35 @@ import com.example.rental.domain.Payment;
 import com.example.rental.domain.enums.BicycleStatus;
 import com.example.rental.domain.enums.PaymentStatus;
 import com.example.rental.exceptions.CustomPaymentException;
-import com.example.rental.repositories.impl.BicycleRepositoryImpl;
-import com.example.rental.repositories.impl.PaymentRepositoryImpl;
+import com.example.rental.repositories.BicycleRepository;
+import com.example.rental.repositories.PaymentRepository;
 import com.example.rental.services.PaymentService;
 
 @Service
 public class DomainPaymentServiceImpl implements PaymentService {
   @Autowired
-  private PaymentRepositoryImpl paymentRepositoryImpl;
+  private PaymentRepository paymentRepository;
   @Autowired
-  private BicycleRepositoryImpl bicycleRepositoryImpl;
+  private BicycleRepository bicycleRepository;
 
   @Override
   public void payPayment(int id, BigDecimal money) {
 
-    List<Payment> sortPayment = paymentRepositoryImpl.getAllPayments().stream()
+    List<Payment> sortPayment = paymentRepository.getAllPayments().stream()
       .filter(s -> s.getPaymentStatus() == PaymentStatus.WAITING)
       .filter(s -> s.getClient().getId() == id)
       .collect(Collectors.toList());
 
     if (!(sortPayment.get(0).getPrice().compareTo(money) == 0)) {
       int paymentId = sortPayment.get(0).getLeaseAgreement().getBicycle().getId();
-      Bicycle bicycle = bicycleRepositoryImpl.findById(Bicycle.class, paymentId);
+      Bicycle bicycle = bicycleRepository.findById(Bicycle.class, paymentId).get();
       bicycle.setBicycleStatus(BicycleStatus.AVAILABLE);
-      paymentRepositoryImpl.updateStatus(sortPayment.get(0).getId(), PaymentStatus.CANCELLED);
+      paymentRepository.updateStatus(sortPayment.get(0).getId(), PaymentStatus.CANCELLED);
 
       throw new CustomPaymentException("Сумма платежа не соответствует прописанной в договоре, повторите алгоритм аренды велосипеда заново");
     }
 
-    paymentRepositoryImpl.updateStatus(sortPayment.get(0).getId(), PaymentStatus.PAID);
+    paymentRepository.updateStatus(sortPayment.get(0).getId(), PaymentStatus.PAID);
 
   }
 }

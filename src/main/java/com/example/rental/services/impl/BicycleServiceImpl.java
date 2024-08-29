@@ -13,16 +13,16 @@ import com.example.rental.domain.enums.BicycleStatus;
 import com.example.rental.dtos.BicycleDTO;
 import com.example.rental.dtos.BicycleByFilterDTO;
 import com.example.rental.dtos.ClientAnthropometricDTO;
-import com.example.rental.repositories.impl.BicycleRepositoryImpl;
-import com.example.rental.repositories.impl.ClientRepositoryImpl;
+import com.example.rental.repositories.BicycleRepository;
+import com.example.rental.repositories.ClientRepository;
 import com.example.rental.services.BicycleService;
 
 @Service
 public class BicycleServiceImpl implements BicycleService {
   @Autowired
-  private BicycleRepositoryImpl bicycleRepositoryImpl;
+  private BicycleRepository bicycleRepository;
   @Autowired
-  private ClientRepositoryImpl clientRepositoryImpl;
+  private ClientRepository clientRepository;
   @Autowired
   private ModelMapper modelMapper;
 
@@ -39,17 +39,17 @@ public class BicycleServiceImpl implements BicycleService {
       bicycleDTO.getCostPerDay(),
       bicycleDTO.getBicycleStatus());
 
-    bicycleRepositoryImpl.save(bicycle);
+    bicycleRepository.save(bicycle);
 
     return modelMapper.map(bicycle, BicycleDTO.class);
   }
 
   @Override
   public List<BicycleDTO> getBicycleByAnthropometricByClient(int id) {
-    Client client = clientRepositoryImpl.findById(Client.class, id);
+    Client client = clientRepository.findById(Client.class, id).get();
     ClientAnthropometricDTO clientAnthropometricDTO = modelMapper.map(client, ClientAnthropometricDTO.class);
 
-    List<Bicycle> listBicycle = bicycleRepositoryImpl.getAvailableBicycleByStatus(BicycleStatus.AVAILABLE);
+    List<Bicycle> listBicycle = bicycleRepository.getAvailableBicycleByStatus(BicycleStatus.AVAILABLE);
     List<BicycleDTO> sortBicycle = listBicycle.stream()
       .filter(b -> b.getMaxHeight() >= clientAnthropometricDTO.getHeight())
       .filter(b -> b.getMaxWeight() >= clientAnthropometricDTO.getWeight())
@@ -61,7 +61,7 @@ public class BicycleServiceImpl implements BicycleService {
 
   @Override
   public List<BicycleByFilterDTO> getBicycleByFilter(BicycleByFilterDTO bicycleByFilterDTO) {
-    List<Bicycle> bicycles = bicycleRepositoryImpl.getBicycleByFilter(
+    List<Bicycle> bicycles = bicycleRepository.getBicycleByFilter(
         bicycleByFilterDTO.getManufacturer(),
         bicycleByFilterDTO.getModel(),
         bicycleByFilterDTO.getBicycleType(),
